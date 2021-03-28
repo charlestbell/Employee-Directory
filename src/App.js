@@ -7,6 +7,7 @@ import Table from "./components/Table";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState({});
 
   useEffect(() => {
     API.getUsers()
@@ -14,7 +15,7 @@ function App() {
         setUsers(res.data.results);
         // setTimeout(console.log(users), 300);
       })
-      .catch((err) => this.setState({ error: err.message }));
+      .catch((err) => setError({ error: err.message }));
   }, []);
 
   const sortBy = () => {
@@ -29,9 +30,16 @@ function App() {
       return 0;
     });
     console.log("localUsers ", localUsers);
-    setUsers(localUsers);
+    setUsers([...localUsers]);
+
     // setTimeout(console.log("Users ", users), 300);
   };
+
+  // Force an update inside a functional component
+  // useEffect(() => {
+  //   const [value, setValue] = useState(0); // integer state
+  //   return () => setValue((value) => value + 1); // update the state to force render // Copied from stack overflow https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render
+  // }, [users]);
 
   return (
     <div className="App">

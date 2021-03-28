@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import TableRows from "../TableRows";
 
 // import "./style.css";
 
@@ -22,7 +21,15 @@ function Table(props) {
         </tr>
       </thead>
       <tbody>
-        <TableRows users={props.users} />
+        {props.users.map((item, index) => (
+          <tr key={index}>
+            <td>{item.name.first}</td>
+            <td>{item.name.last}</td>
+            <td>{item.email}</td>
+            <td>{item.location.country}</td>
+            <td>{item.location.city}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
