@@ -4,10 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import API from "./utils/API";
 import "./components/Table";
 import Table from "./components/Table";
+import FilterBy from "./components/FilterBy";
 
 function App() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState({});
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     API.getUsers()
@@ -17,6 +19,11 @@ function App() {
       })
       .catch((err) => setError({ error: err.message }));
   }, []);
+
+  // Update filter everytime the user types in the find a user box.
+  const handleInputChange = (event) => {
+    setFilter(event.target.value);
+  };
 
   const sortBy = () => {
     let localUsers = users.sort((a, b) => {
@@ -29,25 +36,24 @@ function App() {
       // a must be equal to b
       return 0;
     });
-    console.log("localUsers ", localUsers);
+
     setUsers([...localUsers]);
-
-    // setTimeout(console.log("Users ", users), 300);
   };
+  const filterBy = (event) => {
+    event.preventDefault();
 
-  // Force an update inside a functional component
-  // useEffect(() => {
-  //   const [value, setValue] = useState(0); // integer state
-  //   return () => setValue((value) => value + 1); // update the state to force render // Copied from stack overflow https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render
-  // }, [users]);
+    let localUsers = users.filter((user) => user.name.first === filter);
 
+    setUsers([...localUsers]);
+  };
+  // console.log("Filter state", filter);
   return (
     <div className="App">
       <header className="App-header">
         <p>Employees</p>
+        <FilterBy filterBy={filterBy} handleInputChange={handleInputChange} />
         <button onClick={sortBy}>
           <h3>Sort by Name</h3>
-          {/* <h3>Filter by</h3> */}
         </button>
         <Table users={users} />
       </header>

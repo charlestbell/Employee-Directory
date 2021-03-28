@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 // import "./style.css";
 
 function Table(props) {
-  // const [users, setUsers] = useState([]);
-
-  // useEffect(() => {
-  //   setUsers(props.users);
-  // }, []);
-
   return (
     <table style={{ width: "100%" }}>
       <thead>
