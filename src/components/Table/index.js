@@ -7,11 +7,21 @@ function Table(props) {
     <table style={{ width: "100%" }}>
       <thead>
         <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
-          <th>Country</th>
-          <th>City</th>
+          <th data-column="firstName" onClick={props.sortBy}>
+            Firstname
+          </th>
+          <th data-column="lastName" onClick={props.sortBy}>
+            Lastname
+          </th>
+          <th data-column="email" onClick={props.sortBy}>
+            Email
+          </th>
+          <th data-column="country" onClick={props.sortBy}>
+            Country
+          </th>
+          <th data-column="city" onClick={props.sortBy}>
+            City
+          </th>
         </tr>
       </thead>
       <tbody>

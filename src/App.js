@@ -25,18 +25,75 @@ function App() {
     setFilter(event.target.value);
   };
 
-  const sortBy = () => {
-    let localUsers = users.sort((a, b) => {
-      if (a.name.first < b.name.first) {
-        return -1;
-      }
-      if (a.name.first > b.name.first) {
-        return 1;
-      }
-      // a must be equal to b
-      return 0;
-    });
+  const sortBy = (event) => {
+    console.log(event.target.dataset.column);
+    let localUsers;
+    switch (event.target.dataset.column) {
+      case "firstName":
+        localUsers = users.sort((a, b) => {
+          if (a.name.first < b.name.first) {
+            return -1;
+          }
+          if (a.name.first > b.name.first) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+        break;
+      case "lastName":
+        localUsers = users.sort((a, b) => {
+          if (a.name.last < b.name.last) {
+            return -1;
+          }
+          if (a.name.last > b.name.last) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+        break;
+      case "email":
+        localUsers = users.sort((a, b) => {
+          if (a.email < b.email) {
+            return -1;
+          }
+          if (a.email > b.email) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+        break;
+      case "country":
+        localUsers = users.sort((a, b) => {
+          if (a.location.country < b.location.country) {
+            return -1;
+          }
+          if (a.location.country > b.location.country) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+        break;
+      case "city":
+        localUsers = users.sort((a, b) => {
+          if (a.location.city < b.location.city) {
+            return -1;
+          }
+          if (a.location.city > b.location.city) {
+            return 1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+        break;
 
+      default:
+        localUsers = users;
+        break;
+    }
     setUsers([...localUsers]);
   };
   const filterBy = (event) => {
@@ -46,16 +103,14 @@ function App() {
 
     setUsers([...localUsers]);
   };
+  // console.log(users);
   // console.log("Filter state", filter);
   return (
     <div className="App">
       <header className="App-header">
         <p>Employees</p>
         <FilterBy filterBy={filterBy} handleInputChange={handleInputChange} />
-        <button onClick={sortBy}>
-          <h3>Sort by Name</h3>
-        </button>
-        <Table users={users} />
+        <Table users={users} sortBy={sortBy} />
       </header>
     </div>
   );
